@@ -1,5 +1,5 @@
-CREATE DATABASE micro_saas_agendamentos;
-USE micro_saas_agendamentos;
+CREATE DATABASE calmind;
+USE calmind;
 
 CREATE TABLE Cliente (
   id INT PRIMARY KEY AUTO_INCREMENT,
@@ -47,6 +47,7 @@ CREATE TABLE ImagemServico (
 CREATE TABLE Disponibilidade (
   id INT PRIMARY KEY AUTO_INCREMENT,
   prestador_id INT NOT NULL,
+  dia_mes DATETIME NOT NULL,
   dia_semana ENUM('SEG','TER','QUA','QUI','SEX','SAB','DOM') NOT NULL,
   hora_inicio TIME NOT NULL,
   hora_fim TIME NOT NULL,
@@ -59,16 +60,16 @@ CREATE TABLE Agendamento (
   id INT PRIMARY KEY AUTO_INCREMENT,
   cliente_id INT NOT NULL,
   prestador_id INT NOT NULL,
-  data_agendamento DATE NOT NULL,
-  hora_inicio TIME NOT NULL,
-  hora_fim TIME NOT NULL,
+  disponibilidade_id INT NOT NULL,
   status ENUM('solicitado', 'aceito', 'concluido') DEFAULT 'solicitado',
   criado_em DATETIME DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (cliente_id) REFERENCES Cliente(id)
     ON DELETE CASCADE,
   FOREIGN KEY (prestador_id) REFERENCES Prestador(id)
     ON DELETE CASCADE,
-  UNIQUE (prestador_id, data_agendamento, hora_inicio, hora_fim)
+  FOREIGN KEY (disponibilidade_id) REFERENCES Disponibilidade(id)
+    ON DELETE CASCADE,
+  UNIQUE (prestador_id, disponibilidade_id, hora_inicio, hora_fim)
 );
 
 -- historico do agendamento
