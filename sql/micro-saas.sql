@@ -1,6 +1,11 @@
 CREATE DATABASE calmind;
 USE calmind;
 
+CREATE TABLE Cidade (
+	id INT PRIMARY KEY AUTO_INCREMENT,
+    nome VARCHAR(100)
+);
+
 CREATE TABLE Cliente (
   id INT PRIMARY KEY AUTO_INCREMENT,
   nome VARCHAR(100) NOT NULL,
@@ -28,11 +33,6 @@ CREATE TABLE Prestador (
   cidade_id INT NOT NULL,
   FOREIGN KEY (cidade_id) REFERENCES Cidade(id)
     ON DELETE CASCADE
-);
-
-CREATE TABLE Cidade (
-	id INT PRIMARY KEY AUTO_INCREMENT,
-    nome VARCHAR(100)
 );
 
 CREATE TABLE ImagemServico (
@@ -69,7 +69,7 @@ CREATE TABLE Agendamento (
     ON DELETE CASCADE,
   FOREIGN KEY (disponibilidade_id) REFERENCES Disponibilidade(id)
     ON DELETE CASCADE,
-  UNIQUE (prestador_id, disponibilidade_id, hora_inicio, hora_fim)
+  UNIQUE (prestador_id, disponibilidade_id)
 );
 
 -- historico do agendamento
