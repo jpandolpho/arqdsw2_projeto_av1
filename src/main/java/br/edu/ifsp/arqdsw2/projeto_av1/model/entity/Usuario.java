@@ -12,6 +12,8 @@ public abstract class Usuario {
 	private String senha;
 	private List<Agendamento> agendamentos;
 	
+	public Usuario() {}
+	
 	public Usuario(String nome, String endereco, String email, String senha) {
 		init(nome,endereco,email,hashSHA256(senha));
 	}
@@ -64,7 +66,7 @@ public abstract class Usuario {
 		agendamentos.add(a);
 	}
 
-	private void init(String nome, String endereco, String email, String senha) {
+	protected void init(String nome, String endereco, String email, String senha) {
 		this.nome = nome;
 		this.endereco = endereco;
 		this.email = email;
@@ -79,7 +81,7 @@ public abstract class Usuario {
 		return false;
 	}
 	
-	private static String hashSHA256(String senha) {
+	protected static String hashSHA256(String senha) {
 		try {
 			var digest = MessageDigest.getInstance("SHA-256");
 			
