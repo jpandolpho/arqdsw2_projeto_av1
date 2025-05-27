@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Usuario {
+	private int id;
 	private String nome;
 	private String endereco;
 	private String email;
@@ -56,6 +57,13 @@ public abstract class Usuario {
 
 	public void setSenha(String senha) {
 		this.senha = senha;
+	}
+	
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public List<Agendamento> getAgendamentos() {

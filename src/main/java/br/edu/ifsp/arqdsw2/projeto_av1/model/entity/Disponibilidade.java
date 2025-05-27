@@ -1,26 +1,18 @@
 package br.edu.ifsp.arqdsw2.projeto_av1.model.entity;
 
+import br.edu.ifsp.arqdsw2.projeto_av1.model.enums.DiaSemana;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-enum DiaSemana{
-	SEG,
-	TER,
-	QUA,
-	QUI,
-	SEX,
-	SAB,
-	DOM
-}
-
 public class Disponibilidade {
 	private Date diaMes;
 	private DiaSemana diaSemana;
 	private LocalTime horaInicio;
-	private LocalTime horFim;
+	private LocalTime horaFim;
 	private List<Agendamento> agendamentos;
+	private int prestadorId;
 	
 	public Disponibilidade() {}
 
@@ -28,7 +20,7 @@ public class Disponibilidade {
 		this.diaMes = diaMes;
 		this.diaSemana = diaSemana;
 		this.horaInicio = horaInicio;
-		this.horFim = horFim;
+		this.horaFim = horFim;
 		agendamentos = new ArrayList<Agendamento>();
 	}
 
@@ -56,12 +48,20 @@ public class Disponibilidade {
 		this.horaInicio = horaInicio;
 	}
 
-	public LocalTime getHorFim() {
-		return horFim;
+	public LocalTime getHoraFim() {
+		return horaFim;
 	}
 
-	public void setHorFim(LocalTime horFim) {
-		this.horFim = horFim;
+	public void setHoraFim(LocalTime horFim) {
+		this.horaFim = horFim;
+	}
+	
+	public int getPrestadorId() {
+	    return prestadorId;
+	}
+
+	public void setPrestadorId(int prestadorId) {
+	    this.prestadorId = prestadorId;
 	}
 
 	public List<Agendamento> getAgendamentos() {

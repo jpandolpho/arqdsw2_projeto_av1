@@ -47,6 +47,8 @@ public class PrestadorDao {
 				p = new Prestador(resultSet.getString("nome_fantasia"),resultSet.getString("foto_perfil"),resultSet.getString("especialidade"),
 						resultSet.getString("descricao"),resultSet.getString("nome_completo"),resultSet.getString("endereco"),
 						resultSet.getString("email"),resultSet.getString("senha_hash"),true);
+				p.setId(resultSet.getInt("id"));
+				
 				ImagemServDao imagemDao = new ImagemServDao();
 				p.addAllImagens(imagemDao.retriveImagens(p.getEmail()));
 			}
