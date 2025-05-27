@@ -3,7 +3,9 @@ package br.edu.ifsp.arqdsw2.projeto_av1.controller;
 import java.io.IOException;
 
 import br.edu.ifsp.arqdsw2.projeto_av1.controller.command.Command;
+import br.edu.ifsp.arqdsw2.projeto_av1.controller.command.SaveClienteCommand;
 import br.edu.ifsp.arqdsw2.projeto_av1.controller.command.SavePsicologoCommand;
+import br.edu.ifsp.arqdsw2.projeto_av1.controller.command.CadastroClienteCommand;
 import br.edu.ifsp.arqdsw2.projeto_av1.controller.command.CadastroPsicologoCommand;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.MultipartConfig;
@@ -36,11 +38,13 @@ public class FrontServlet extends HttpServlet {
 		if("login".equals(action)) {
 			//command = new LoginCommand();
 		}else if("cadCliente".equals(action)) {
-			//command = new CadastroClienteCommand();
+			command = new CadastroClienteCommand();
 		}else if("cadPsicologo".equals(action)) {
 			command = new CadastroPsicologoCommand();
 		}else if("savePsicologo".equals(action)) {
 			command = new SavePsicologoCommand();
+		}else if("saveCliente".equals(action)) {
+			command = new SaveClienteCommand();
 		}
 		
 		String view = command.execute(request, response);
