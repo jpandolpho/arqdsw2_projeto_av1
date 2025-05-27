@@ -33,10 +33,9 @@ public class ImagemServDao {
 	public List<ImagemServ> retriveImagens(String email){
 		List<ImagemServ> imagens = new ArrayList<>();
 		try(var connection = DatabaseConnection.getConnection();
-				var stmt = connection.prepareStatement(INSERT)){
+				var stmt = connection.prepareStatement(SELECT_BY_PRESTADOR)){
 			PrestadorDao dao = new PrestadorDao();
 			int id = dao.findIdByEmail(email);
-			
 			stmt.setInt(1, id);
 			var result = stmt.executeQuery();
 			

@@ -99,6 +99,8 @@ public class Prestador extends Usuario {
 	}
 	
 	public void addAllImagens(List<ImagemServ> imagens) {
-		imagens.addAll(imagens);
+		for(ImagemServ i : imagens) {
+			addImagem(i);
+		}
 	}
 }

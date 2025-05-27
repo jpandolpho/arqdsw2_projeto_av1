@@ -61,7 +61,7 @@ public class PrestadorDao {
 	public int findIdByEmail(String email) {
 		int id = -1;
 		try(var connection = DatabaseConnection.getConnection();
-				var stmt = connection.prepareStatement(SELECT_BY_EMAIL)){
+				var stmt = connection.prepareStatement(SELECT_ID_BY_EMAIL)){
 			stmt.setString(1, email);
 			
 			var resultSet = stmt.executeQuery();
