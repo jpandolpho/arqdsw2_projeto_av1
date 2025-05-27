@@ -2,6 +2,7 @@ package br.edu.ifsp.arqdsw2.projeto_av1.controller;
 
 import java.io.IOException;
 
+import br.edu.ifsp.arqdsw2.projeto_av1.model.entity.Cliente;
 import br.edu.ifsp.arqdsw2.projeto_av1.model.entity.Prestador;
 import jakarta.servlet.Filter;
 import jakarta.servlet.FilterChain;
@@ -23,10 +24,15 @@ public class PrestadorFilter extends HttpFilter implements Filter {
 		if (session != null && session.getAttribute("user") != null && session.getAttribute("user") instanceof Prestador) {
 			chain.doFilter(request, response);
 		} else {
-			request.setAttribute("msg", "Acesso permitido apenas para usuário logado.");
-			
-			var dispatcher = request.getRequestDispatcher("front?action=home");
-			dispatcher.forward(request, response);
+			if(session.getAttribute("user") != null && session.getAttribute("user") instanceof Cliente) {
+				var dispatcher = request.getRequestDispatcher("clientes?action=home");
+				dispatcher.forward(request, response);
+			}else {
+				request.setAttribute("msg", "Acesso permitido apenas para usuário logado.");
+				
+				var dispatcher = request.getRequestDispatcher("front?action=home");
+				dispatcher.forward(request, response);
+			}
 		}
 	}
 }
