@@ -97,4 +97,8 @@ public class Prestador extends Usuario {
 	public void addDisponibilidade(Disponibilidade d) {
 		disponibilidades.add(d);
 	}
+	
+	public void addAllImagens(List<ImagemServ> imagens) {
+		imagens.addAll(imagens);
+	}
 }

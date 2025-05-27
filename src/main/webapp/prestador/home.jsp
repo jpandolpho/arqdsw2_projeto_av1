@@ -6,5 +6,7 @@
 <body>
 <h1>PRESTADOR!</h1>
 <a href="prestadores?action=logout">DESLOGAR</a>
+<a href="prestadores?action=perfil">Perfil</a>
+<a href="prestadores?action=addFoto">Adicionar Fotos</a>
 </body>
 </html>
