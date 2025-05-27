@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Context>
 	<Resource 
-		name="jdbc/Calmind" 
+		name="jdbc/calmind" 
 		auth="Container"
 		type="javax.sql.DataSource" 
 		username="root" 
 		password="root"
 		driverClassName="com.mysql.cj.jdbc.Driver"
-		url="jdbc:mysql://localhost:3307/calmind" 
+		url="jdbc:mysql://localhost:3306/calmind" 
 		maxTotal="10" 
 		maxIdle="5"
 		minIdle="2" />

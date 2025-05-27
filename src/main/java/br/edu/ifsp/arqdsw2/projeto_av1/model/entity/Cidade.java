@@ -13,6 +13,7 @@ public class Cidade {
 
 	public Cidade(String nome) {
 		this.nome = nome;
+		usuarios = new ArrayList<Usuario>();
 	}
 
 	public String getNome() {

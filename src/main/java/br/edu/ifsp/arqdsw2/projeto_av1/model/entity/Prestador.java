@@ -15,29 +15,29 @@ public class Prestador extends Usuario {
 	
 	public Prestador() {}
 
-	public Prestador(String nomeFantasia, String fotoPerfil, String especialidade, String descricao, Date dataCriacao, 
+	public Prestador(String nomeFantasia, String fotoPerfil, String especialidade, String descricao, 
 			String nome, String endereco, String email, String senha, Boolean fromDB) {
 		super();
 		if(fromDB) {
-			init(nomeFantasia, fotoPerfil, especialidade, descricao, dataCriacao, nome,endereco,email,senha);
+			init(nomeFantasia, fotoPerfil, especialidade, descricao, nome,endereco,email,senha);
 		}else {
-			init(nomeFantasia, fotoPerfil, especialidade, descricao, dataCriacao, nome,endereco,email,hashSHA256(senha));
+			init(nomeFantasia, fotoPerfil, especialidade, descricao, nome,endereco,email,hashSHA256(senha));
 		}
 	}
 
-	public Prestador(String nomeFantasia, String fotoPerfil, String especialidade, String descricao, Date dataCriacao,
+	public Prestador(String nomeFantasia, String fotoPerfil, String especialidade, String descricao, 
 			String nome, String endereco, String email, String senha) {
 		super();
-		init(nomeFantasia, fotoPerfil, especialidade, descricao, dataCriacao, nome,endereco,email,hashSHA256(senha));
+		init(nomeFantasia, fotoPerfil, especialidade, descricao, nome,endereco,email,hashSHA256(senha));
 	}
 
 	private void init(String nomeFantasia, String fotoPerfil, String especialidade, String descricao,
-			Date dataCriacao, String nome, String endereco, String email, String senha) {
+			 String nome, String endereco, String email, String senha) {
 		init(nome,endereco,email,senha);
 		this.nomeFantasia = nomeFantasia;
 		this.fotoPerfil = fotoPerfil;
 		this.especialidade = especialidade;
-		this.dataCriacao = dataCriacao;
+		this.dataCriacao = new Date();
 		imagens = new ArrayList<ImagemServ>();
 		disponibilidades = new ArrayList<Disponibilidade>();
 	}
