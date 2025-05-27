@@ -36,7 +36,7 @@ public class SaveClienteCommand implements Command {
 		}else {
 			System.out.println("Não salvou");
 		}
-		return "index.jsp";
+		return "front?action=home";
 	}
 
 }

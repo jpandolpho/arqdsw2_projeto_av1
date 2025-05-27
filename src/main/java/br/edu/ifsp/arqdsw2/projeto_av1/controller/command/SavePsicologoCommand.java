@@ -8,7 +8,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
-import br.edu.ifsp.arqdsw2.projeto_av1.model.dao.PsicologoDao;
+import br.edu.ifsp.arqdsw2.projeto_av1.model.dao.PrestadorDao;
 import br.edu.ifsp.arqdsw2.projeto_av1.model.entity.Prestador;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -50,14 +50,14 @@ public class SavePsicologoCommand implements Command {
 
 		Prestador p = new Prestador(nomeFantasia,fileName,especialidade,descricao,nome,endereco,email,senha);
 		
-		PsicologoDao dao = new PsicologoDao();
+		PrestadorDao dao = new PrestadorDao();
 		var saved = dao.insert(p, cidade);
 		if(saved) {
 			System.out.println("Salvou");
 		}else {
 			System.out.println("Não salvou");
 		}
-		return "index.jsp";
+		return "front?action=home";
 	}
 
 }

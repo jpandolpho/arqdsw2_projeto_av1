@@ -7,6 +7,7 @@ import br.edu.ifsp.arqdsw2.projeto_av1.model.entity.Cliente;
 
 public class ClienteDao {
 	private static final String INSERT = "INSERT INTO cliente(nome,cpf,endereco,contato,email,senha_hash,cidade_id) VALUES (?,?,?,?,?,?,?)";
+	private static final String SELECT_BY_EMAIL = "SELECT * FROM cliente WHERE email=?";
 	
 	public boolean insert(Cliente c, String cidade) {
 		int rows = 0;
@@ -29,5 +30,24 @@ public class ClienteDao {
 			}
 		}
 		return rows > 0;
+	}
+	
+	public Cliente findByEmail(String email) {
+		Cliente c = null;
+		try(var connection = DatabaseConnection.getConnection();
+				var stmt = connection.prepareStatement(SELECT_BY_EMAIL)){
+			stmt.setString(1, email);
+			
+			var resultSet = stmt.executeQuery();
+			if(resultSet.next()) {
+				c = new Cliente(resultSet.getString("cpf"),resultSet.getString("contato"),resultSet.getString("nome"),
+						resultSet.getString("endereco"),resultSet.getString("email"),resultSet.getString("senha_hash"),true);
+			}
+			
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return c;
 	}
 }
