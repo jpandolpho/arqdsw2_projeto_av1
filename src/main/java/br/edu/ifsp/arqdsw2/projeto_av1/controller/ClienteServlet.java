@@ -7,6 +7,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+import br.edu.ifsp.arqdsw2.projeto_av1.controller.command.BuscarPrestadoresCommand;
 import br.edu.ifsp.arqdsw2.projeto_av1.controller.command.Command;
 import br.edu.ifsp.arqdsw2.projeto_av1.controller.command.HomeClienteCommand;
 import br.edu.ifsp.arqdsw2.projeto_av1.controller.command.HomePsicologoCommand;
