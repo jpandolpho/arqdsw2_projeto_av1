@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-   <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-   <%@ page isELIgnored="false" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page isELIgnored="false" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -24,6 +24,22 @@
             object-fit: cover;
             border-radius: 50%;
         }
+        pagination {
+	    margin: 20px 0;
+	    text-align: center;
+	  }
+	  	.pagination a {
+	    margin: 0 5px;
+	    padding: 5px 10px;
+	    border: 1px solid #ccc;
+	    text-decoration: none;
+	    color: #333;
+	  }
+	  	.pagination a.ativo {
+	    background-color: #333;
+	    color: #fff;
+	    pointer-events: none;
+	  }
     </style>
 </head>
 	<h2>Prestadores disponíveis</h2>
@@ -44,6 +60,23 @@
 			</a>
         </div>
     </c:forEach>
+    
+    <div class="pagination">
+  	<c:if test="${currentPage > 0}">
+    <a href="clientes?action=home&page=${currentPage-1}">« Anterior</a>
+  	</c:if>
+
+	  <c:forEach begin="0" end="${totalPages-1}" var="i">
+	    <a href="clientes?action=home&page=${i}"
+	       class="${i == currentPage ? 'ativo' : ''}">
+	      ${i + 1}
+	    </a>
+	  </c:forEach>
+	
+	  <c:if test="${currentPage < totalPages-1}">
+	    <a href="clientes?action=home&page=${currentPage+1}">Próxima »</a>
+	  </c:if>
+</div>
     
 <a href="clientes?action=logout">DESLOGAR</a>
 </body>
