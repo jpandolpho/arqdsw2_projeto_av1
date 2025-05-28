@@ -15,7 +15,7 @@
 		<br><br>
 		
 		<label for="descricao">Descrição:</label>
-		<input type="text" name="descricao" id="descricao">
+		<textarea name="descricao" id="descricao"></textarea>
 		<br><br>
 		
 		<label for="fotoPerfil">Foto de Perfil:</label>

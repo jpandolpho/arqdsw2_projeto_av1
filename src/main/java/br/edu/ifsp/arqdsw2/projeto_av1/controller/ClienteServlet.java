@@ -13,6 +13,7 @@ import br.edu.ifsp.arqdsw2.projeto_av1.controller.command.Command;
 import br.edu.ifsp.arqdsw2.projeto_av1.controller.command.HomeClienteCommand;
 import br.edu.ifsp.arqdsw2.projeto_av1.controller.command.HomePsicologoCommand;
 import br.edu.ifsp.arqdsw2.projeto_av1.controller.command.LogoutCommand;
+import br.edu.ifsp.arqdsw2.projeto_av1.controller.command.SaibaMaisPrestadorCommand;
 
 @WebServlet("/clientes")
 public class ClienteServlet extends HttpServlet {
@@ -38,6 +39,8 @@ public class ClienteServlet extends HttpServlet {
 		    command = new BuscarPrestadoresCommand();
 		} else if("agendar".equals(action)) {
 		    command = new AgendarCommand();
+		} else if("saibamais".equals(action)) {
+			command = new SaibaMaisPrestadorCommand();
 		}
 		
 		String view = command.execute(request, response);

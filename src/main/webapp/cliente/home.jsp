@@ -33,37 +33,17 @@
 	</c:if>
 	
 	
-    <c:forEach var="prestador" items="${prestadores}">
+    <c:forEach var="prestador" items="${prestadores}">    
         <div class="card">
             <img src="${prestador.fotoPerfil}" alt="Foto de ${prestador.nomeFantasia}" />
             <h3>${prestador.nomeFantasia}</h3>
             <p><strong>Especialidade:</strong> ${prestador.especialidade}</p>
-            <p><strong>Descrição:</strong> ${prestador.descricao}</p>
             <p><strong>Email:</strong> ${prestador.email}</p>
-             <button 
-	            class="btn-agendar"
-	            data-prestador-id="${prestador.id}">
-	            Agendar
-        	</button>
+            <a href="clientes?action=saibamais&prestadorId=${prestador.id}" >
+			    Saiba Mais
+			</a>
         </div>
     </c:forEach>
-    
-    <div id="modal-agendamento"></div>
-
-		<script>
-		document.querySelectorAll('.btn-agendar').forEach(btn => {
-		    btn.addEventListener('click', () => {
-		        const prestadorId = btn.dataset.prestadorId;
-		
-		        fetch(`controller?command=BuscarDisponibilidades&prestadorId=${prestadorId}`)
-		            .then(res => res.text())
-		            .then(html => {
-		                document.getElementById("modal-agendamento").innerHTML = html;
-		                document.getElementById("modal-agendamento").style.display = "block";
-		            });
-		    });
-		});
-		</script>
     
 <a href="clientes?action=logout">DESLOGAR</a>
 </body>

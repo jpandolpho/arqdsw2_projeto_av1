@@ -41,7 +41,7 @@ public class PrestadorDao {
 	        if (rows > 0) {
 	            try (var generatedKeys = stmt.getGeneratedKeys()) {
 	                if (generatedKeys.next()) {
-	                    p.setId(generatedKeys.getInt(1));  // armazena o ID gerado no objeto
+	                    p.setId(generatedKeys.getInt(1));  
 	                }
 	            }
 	        }
@@ -93,6 +93,42 @@ public class PrestadorDao {
 		
 		return id;
 	}
+	
+	public Prestador findById(int id) {
+	    Prestador p = null;
+	    String sql = "SELECT * FROM prestador WHERE id = ?";
+
+	    try (var connection = DatabaseConnection.getConnection();
+	         var stmt = connection.prepareStatement(sql)) {
+
+	        stmt.setInt(1, id);
+	        var rs = stmt.executeQuery();
+
+	        if (rs.next()) {
+	            p = new Prestador(
+	                rs.getString("nome_fantasia"),
+	                rs.getString("foto_perfil"),
+	                rs.getString("especialidade"),
+	                rs.getString("descricao"),
+	                rs.getString("nome_completo"),
+	                rs.getString("endereco"),
+	                rs.getString("email"),
+	                rs.getString("senha_hash"),
+	                true
+	            );
+	            p.setId(rs.getInt("id"));
+
+	            ImagemServDao imagemDao = new ImagemServDao();
+	            p.addAllImagens(imagemDao.retriveImagens(p.getEmail()));
+	        }
+
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+
+	    return p;
+	}
+
 	
 	public List<Prestador> buscarPorCidadeEspecialidade(String cidade, String especialidade) {
 	    List<Prestador> prestadores = new ArrayList<>();
