@@ -33,21 +33,28 @@ public class ClienteDao {
 	}
 	
 	public Cliente findByEmail(String email) {
-		Cliente c = null;
-		try(var connection = DatabaseConnection.getConnection();
-				var stmt = connection.prepareStatement(SELECT_BY_EMAIL)){
-			stmt.setString(1, email);
-			
-			var resultSet = stmt.executeQuery();
-			if(resultSet.next()) {
-				c = new Cliente(resultSet.getString("cpf"),resultSet.getString("contato"),resultSet.getString("nome"),
-						resultSet.getString("endereco"),resultSet.getString("email"),resultSet.getString("senha_hash"),true);
-			}
-			
-		}catch(SQLException e) {
-			e.printStackTrace();
-		}
-		
-		return c;
-	}
-}
+        Cliente c = null;
+        try (var connection = DatabaseConnection.getConnection();
+             var stmt = connection.prepareStatement(SELECT_BY_EMAIL)) {
+            stmt.setString(1, email);
+
+            var resultSet = stmt.executeQuery();
+            if (resultSet.next()) {
+                c = new Cliente(
+                    resultSet.getString("cpf"),
+                    resultSet.getString("contato"),
+                    resultSet.getString("nome"),
+                    resultSet.getString("endereco"),
+                    resultSet.getString("email"),
+                    resultSet.getString("senha_hash"),
+                    true
+                );
+                c.setId(resultSet.getInt("id"));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return c;
+    }}

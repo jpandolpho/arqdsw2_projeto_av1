@@ -2,71 +2,81 @@ package br.edu.ifsp.arqdsw2.projeto_av1.controller.command;
 
 import br.edu.ifsp.arqdsw2.projeto_av1.model.dao.AgendamentoDao;
 import br.edu.ifsp.arqdsw2.projeto_av1.model.entity.Agendamento;
-import br.edu.ifsp.arqdsw2.projeto_av1.model.dao.DisponibilidadeDao;
-import br.edu.ifsp.arqdsw2.projeto_av1.model.entity.Disponibilidade;
 import br.edu.ifsp.arqdsw2.projeto_av1.model.entity.LogAgendamento;
 import br.edu.ifsp.arqdsw2.projeto_av1.model.enums.Status;
-
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-
+import jakarta.servlet.http.HttpSession;
+import java.io.IOException;
 import java.sql.Time;
-import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 
 public class AgendarCommand implements Command {
     @Override
-    public String execute(HttpServletRequest request, HttpServletResponse response) {
+    public String execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
         try {
-            int disponibilidadeId = Integer.parseInt(request.getParameter("disponibilidadeId"));
+            int dispId      = Integer.parseInt(request.getParameter("disponibilidadeId"));
             int prestadorId = Integer.parseInt(request.getParameter("prestadorId"));
-            int clienteId = Integer.parseInt(request.getParameter("clienteId"));
 
-            String diaMesStr = request.getParameter("data");
-            String horaInicioStr = request.getParameter("horaInicio");
-            String horaFimStr = request.getParameter("horaFim");
+            HttpSession session = request.getSession(false);
+            var usuario = session.getAttribute("user"); 
+            if (usuario == null) {
+                request.setAttribute("mensagem", "Sessão expirada. Faça login novamente.");
+                return "/front?action=home";
+            }
+            int clienteId = ((br.edu.ifsp.arqdsw2.projeto_av1.model.entity.Cliente) usuario).getId();
 
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-            Date diaMes = dateFormat.parse(diaMesStr);
-            Time horaInicio = Time.valueOf(horaInicioStr + ":00");
-            Time horaFim = Time.valueOf(horaFimStr + ":00");
-            
-            DisponibilidadeDao dispDao = new DisponibilidadeDao();
-            Disponibilidade disp = dispDao.buscarPorId(disponibilidadeId);
+            var disp = new br.edu.ifsp.arqdsw2.projeto_av1.model.dao.DisponibilidadeDao()
+                            .buscarPorId(dispId);
             if (disp == null) {
                 request.setAttribute("mensagem", "Disponibilidade não encontrada.");
-                return "/cliente/agendamento.jsp";
+                return voltarParaSaibaMais(request, prestadorId);
             }
 
-            AgendamentoDao agendamentoDao = new AgendamentoDao();
-            boolean conflito = agendamentoDao.existeConflito(disponibilidadeId, diaMes, horaInicio, horaFim);
-            if (conflito) {
-                request.setAttribute("mensagem", "Já existe um agendamento nesse horário.");
-                return "/cliente/agendamento.jsp";
+            Agendamento ag = new Agendamento();
+            ag.setClienteId(clienteId);
+            ag.setPrestadorId(prestadorId);
+            ag.setDisponibilidadeId(dispId);
+            ag.setDiaMes(disp.getDiaMes());
+            ag.setHoraInicio(Time.valueOf(disp.getHoraInicio()));
+            ag.setHoraFim(Time.valueOf(disp.getHoraFim()));
+            ag.setCriacao(new Date());
+            ag.setEstado(Status.SOLICITADO);
+            ag.addMudanca(new LogAgendamento(Status.SOLICITADO, new Date()));
+
+            AgendamentoDao dao = new AgendamentoDao();
+            boolean ok = dao.createWithTransaction(ag);
+            if (!ok) {
+                request.setAttribute("mensagem", "Este horário já está reservado.");
+            } else {
+                request.setAttribute("mensagem", "Agendamento realizado com sucesso!");
             }
 
-            Agendamento agendamento = new Agendamento();
-            agendamento.setClienteId(clienteId);
-            agendamento.setPrestadorId(prestadorId);
-            agendamento.setDisponibilidadeId(disponibilidadeId);
-            agendamento.setDiaMes(diaMes);
-            agendamento.setHoraInicio(horaInicio);
-            agendamento.setHoraFim(horaFim);
-            agendamento.setCriacao(new Date());
-            agendamento.setEstado(Status.SOLICITADO);
-
-            LogAgendamento log = new LogAgendamento(Status.SOLICITADO, new Date());
-            agendamento.addMudanca(log);
-
-            agendamentoDao.createWithTransaction(agendamento);
-
-            request.setAttribute("mensagem", "Agendamento realizado com sucesso!");
         } catch (Exception e) {
             e.printStackTrace();
-            request.setAttribute("mensagem", "Erro ao realizar agendamento: " + e.getMessage());
+            request.setAttribute("mensagem", "Erro ao agendar: " + e.getMessage());
         }
 
-        return "/cliente/agendamento.jsp";
+
+        int prestadorId = Integer.parseInt(request.getParameter("prestadorId"));
+        return voltarParaSaibaMais(request, prestadorId);
+    }
+
+    private String voltarParaSaibaMais(HttpServletRequest request, int prestadorId) {
+        try {
+            var pDao = new br.edu.ifsp.arqdsw2.projeto_av1.model.dao.PrestadorDao();
+            var prest = pDao.findById(prestadorId);
+            request.setAttribute("prestador", prest);
+
+            var imgDao = new br.edu.ifsp.arqdsw2.projeto_av1.model.dao.ImagemServDao();
+            request.setAttribute("imagens", imgDao.retriveImagens(prest.getEmail()));
+
+            var dDao = new br.edu.ifsp.arqdsw2.projeto_av1.model.dao.DisponibilidadeDao();
+            request.setAttribute("disponibilidades", dDao.buscarPorPrestador(prestadorId));
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            request.setAttribute("mensagem", "Erro ao recarregar a página.");
+        }
+        return "/cliente/saibaMais.jsp";
     }
 }
