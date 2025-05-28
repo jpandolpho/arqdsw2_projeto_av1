@@ -8,5 +8,6 @@
 <a href="prestadores?action=logout">DESLOGAR</a>
 <a href="prestadores?action=perfil">Perfil</a>
 <a href="prestadores?action=addFoto">Adicionar Fotos</a>
+<a href="prestadores?action=listarAgendamentos">Listar Agendamentos</a>
 </body>
 </html>

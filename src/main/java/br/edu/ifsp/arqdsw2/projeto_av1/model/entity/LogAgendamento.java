@@ -2,6 +2,8 @@ package br.edu.ifsp.arqdsw2.projeto_av1.model.entity;
 
 import java.util.Date;
 
+import br.edu.ifsp.arqdsw2.projeto_av1.model.enums.Status;
+
 public class LogAgendamento {
 	private Status estado;
 	private Date horaMudanca;

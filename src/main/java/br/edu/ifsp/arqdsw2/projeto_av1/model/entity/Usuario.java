@@ -13,7 +13,7 @@ public abstract class Usuario {
 	private String senha;
 	private List<Agendamento> agendamentos;
 	
-	public Usuario() {}
+	public Usuario() {agendamentos = new ArrayList<Agendamento>();}
 	
 	public Usuario(String nome, String endereco, String email, String senha) {
 		init(nome,endereco,email,hashSHA256(senha));

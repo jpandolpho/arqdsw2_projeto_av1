@@ -14,7 +14,7 @@ public class Disponibilidade {
 	private List<Agendamento> agendamentos;
 	private int prestadorId;
 	
-	public Disponibilidade() {}
+	public Disponibilidade() {agendamentos = new ArrayList<Agendamento>();}
 
 	public Disponibilidade(Date diaMes, DiaSemana diaSemana, LocalTime horaInicio, LocalTime horFim) {
 		this.diaMes = diaMes;

@@ -61,7 +61,7 @@ CREATE TABLE Agendamento (
   cliente_id INT NOT NULL,
   prestador_id INT NOT NULL,
   disponibilidade_id INT NOT NULL,
-  status ENUM('solicitado', 'aceito', 'concluido') DEFAULT 'solicitado',
+  status ENUM('solicitado', 'aceito', 'concluido','rejeitado') DEFAULT 'solicitado',
   criado_em DATETIME DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (cliente_id) REFERENCES Cliente(id)
     ON DELETE CASCADE,
@@ -76,7 +76,7 @@ CREATE TABLE Agendamento (
 CREATE TABLE LogAgendamento (
   id INT PRIMARY KEY AUTO_INCREMENT,
   agendamento_id INT NOT NULL,
-  status ENUM('solicitado', 'aceito', 'concluido') NOT NULL,
+  status ENUM('solicitado', 'aceito', 'concluido','rejeitado') NOT NULL,
   data_hora DATETIME DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (agendamento_id) REFERENCES Agendamento(id)
     ON DELETE CASCADE

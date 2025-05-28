@@ -6,6 +6,7 @@ import br.edu.ifsp.arqdsw2.projeto_av1.controller.command.AdicionarFotoCommand;
 import br.edu.ifsp.arqdsw2.projeto_av1.controller.command.CadastrarHorarioCommand;
 import br.edu.ifsp.arqdsw2.projeto_av1.controller.command.Command;
 import br.edu.ifsp.arqdsw2.projeto_av1.controller.command.HomePsicologoCommand;
+import br.edu.ifsp.arqdsw2.projeto_av1.controller.command.ListarAgendamentosCommand;
 import br.edu.ifsp.arqdsw2.projeto_av1.controller.command.LogoutCommand;
 import br.edu.ifsp.arqdsw2.projeto_av1.controller.command.PerfilCommand;
 import br.edu.ifsp.arqdsw2.projeto_av1.controller.command.SalvarFotoCommand;
@@ -46,9 +47,11 @@ public class PrestadorServlet extends HttpServlet {
 		}else if("salvarFoto".equals(action)) {
 			command = new SalvarFotoCommand();
 		}else if("perfil".equals(action)) {
-			command = new PerfilCommand(); }
-		else if("cadastrarHorario".equals(action)) {
+			command = new PerfilCommand(); 
+		}else if("cadastrarHorario".equals(action)) {
 				command = new CadastrarHorarioCommand();
+		}else if("listarAgendamentos".equals(action)) {
+			command = new ListarAgendamentosCommand();
 		}else {
 			command = new HomePsicologoCommand();
 		}

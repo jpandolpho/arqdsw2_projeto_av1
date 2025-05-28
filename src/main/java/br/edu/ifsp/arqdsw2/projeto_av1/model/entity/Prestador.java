@@ -13,7 +13,10 @@ public class Prestador extends Usuario {
 	private List<ImagemServ> imagens;
 	private List<Disponibilidade> disponibilidades;
 	
-	public Prestador() {}
+	public Prestador() {
+		imagens = new ArrayList<ImagemServ>();
+		disponibilidades = new ArrayList<Disponibilidade>();
+	}
 
 	public Prestador(String nomeFantasia, String fotoPerfil, String especialidade, String descricao, 
 			String nome, String endereco, String email, String senha, Boolean fromDB) {
