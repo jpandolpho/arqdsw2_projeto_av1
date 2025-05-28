@@ -24,7 +24,7 @@ public class CidadeDao {
 				cidades.add(cidade);
 			}
 		}catch(SQLException e) {
-			e.printStackTrace();
+			e.printStackTrace(); 
 		}
 		return cidades;
 	}

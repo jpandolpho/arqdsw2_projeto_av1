@@ -32,6 +32,8 @@ public class ClienteServlet extends HttpServlet {
 			command = new HomeClienteCommand();
 		}else if("logout".equals(action)) {
 			command = new LogoutCommand();
+		} else if("buscarPrestadores".equals(action)) {
+		    command = new BuscarPrestadoresCommand();
 		}
 		
 		String view = command.execute(request, response);

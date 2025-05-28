@@ -1,6 +1,8 @@
 package br.edu.ifsp.arqdsw2.projeto_av1.model.dao;
 
 import java.sql.SQLException;
+import java.util.List;
+import java.util.ArrayList;
 
 import br.edu.ifsp.arqdsw2.projeto_av1.model.dao.connection.DatabaseConnection;
 import br.edu.ifsp.arqdsw2.projeto_av1.model.entity.Prestador;
@@ -76,4 +78,58 @@ public class PrestadorDao {
 		
 		return id;
 	}
+	
+	public List<Prestador> buscarPorCidadeEspecialidade(String cidade, String especialidade) {
+	    List<Prestador> prestadores = new ArrayList<>();
+	    
+	    StringBuilder sql = new StringBuilder(
+	        "SELECT p.* FROM prestador p JOIN cidade c ON p.cidade_id = c.id WHERE 1=1"
+	    );
+	    
+	    if (cidade != null && !cidade.isBlank()) {
+	        sql.append(" AND c.nome = ?");
+	    }
+	    if (especialidade != null && !especialidade.isBlank()) {
+	        sql.append(" AND p.especialidade = ?");
+	    }
+
+	    try (var connection = DatabaseConnection.getConnection();
+	         var stmt = connection.prepareStatement(sql.toString())) {
+	         
+	        int index = 1;
+	        if (cidade != null && !cidade.isBlank()) {
+	            stmt.setString(index++, cidade);
+	        }
+	        if (especialidade != null && !especialidade.isBlank()) {
+	            stmt.setString(index++, especialidade);
+	        }
+
+	        var rs = stmt.executeQuery();
+	        while (rs.next()) {
+	            Prestador p = new Prestador(
+	                rs.getString("nome_fantasia"),
+	                rs.getString("foto_perfil"),
+	                rs.getString("especialidade"),
+	                rs.getString("descricao"),
+	                rs.getString("nome_completo"),
+	                rs.getString("endereco"),
+	                rs.getString("email"),
+	                rs.getString("senha_hash"),
+	                true
+	            );
+	            p.setId(rs.getInt("id"));
+	            
+	            ImagemServDao imagemDao = new ImagemServDao();
+	            p.addAllImagens(imagemDao.retriveImagens(p.getEmail()));
+	            
+	            prestadores.add(p);
+	        }
+
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+
+	    return prestadores;
+	}
+
 }
