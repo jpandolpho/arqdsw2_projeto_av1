@@ -1,12 +1,17 @@
 package br.edu.ifsp.arqdsw2.projeto_av1.model.dao;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
 import br.edu.ifsp.arqdsw2.projeto_av1.model.dao.connection.DatabaseConnection;
 import br.edu.ifsp.arqdsw2.projeto_av1.model.entity.Agendamento;
+import br.edu.ifsp.arqdsw2.projeto_av1.model.entity.LogAgendamento;
 import br.edu.ifsp.arqdsw2.projeto_av1.model.enums.Status;
 
 public class AgendamentoDao {
@@ -104,4 +109,95 @@ public class AgendamentoDao {
 		}
 		return rows > 0;
 	}
+	
+	public void createWithTransaction(Agendamento agendamento) throws SQLException {
+	    Connection conn = null;
+	    PreparedStatement stmtAgendamento = null;
+	    PreparedStatement stmtLog = null;
+	    ResultSet rs = null;
+
+	    try {
+	        conn = DatabaseConnection.getConnection();
+	        conn.setAutoCommit(false);
+
+	        String sqlCheck = """
+	            SELECT COUNT(*) FROM Agendamento
+	            WHERE prestador_id = ? AND dia_mes = ? AND (
+	                (hora_inicio < ? AND hora_fim > ?) OR
+	                (hora_inicio < ? AND hora_fim > ?) OR
+	                (hora_inicio >= ? AND hora_fim <= ?)
+	            )
+	        """;
+
+	        try (PreparedStatement stmtCheck = conn.prepareStatement(sqlCheck)) {
+	            stmtCheck.setInt(1, agendamento.getPrestadorId());
+	            stmtCheck.setDate(2, new java.sql.Date(agendamento.getDiaMes().getTime()));
+	            stmtCheck.setTime(3, agendamento.getHoraFim());
+	            stmtCheck.setTime(4, agendamento.getHoraFim());
+	            stmtCheck.setTime(5, agendamento.getHoraInicio());
+	            stmtCheck.setTime(6, agendamento.getHoraInicio());
+	            stmtCheck.setTime(7, agendamento.getHoraInicio());
+	            stmtCheck.setTime(8, agendamento.getHoraFim());
+
+	            rs = stmtCheck.executeQuery();
+	            if (rs.next() && rs.getInt(1) > 0) {
+	                conn.rollback();
+	                throw new SQLException("Conflito de agendamento detectado.");
+	            }
+	        }
+
+	        String sqlInsert = """
+	            INSERT INTO Agendamento (cliente_id, prestador_id, disponibilidade_id, estado, criacao, dia_mes, hora_inicio, hora_fim)
+	            VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+	        """;
+
+	        stmtAgendamento = conn.prepareStatement(sqlInsert, Statement.RETURN_GENERATED_KEYS);
+	        stmtAgendamento.setInt(1, agendamento.getClienteId());
+	        stmtAgendamento.setInt(2, agendamento.getPrestadorId());
+	        stmtAgendamento.setInt(3, agendamento.getDisponibilidadeId());
+	        stmtAgendamento.setString(4, agendamento.getEstado().name());
+	        stmtAgendamento.setTimestamp(5, new Timestamp(agendamento.getCriacao().getTime()));
+	        stmtAgendamento.setDate(6, new java.sql.Date(agendamento.getDiaMes().getTime()));
+	        stmtAgendamento.setTime(7, agendamento.getHoraInicio());
+	        stmtAgendamento.setTime(8, agendamento.getHoraFim());
+
+	        int affectedRows = stmtAgendamento.executeUpdate();
+	        if (affectedRows == 0) {
+	            conn.rollback();
+	            throw new SQLException("Falha ao inserir agendamento.");
+	        }
+
+	        rs = stmtAgendamento.getGeneratedKeys();
+	        if (rs.next()) {
+	            agendamento.setId(rs.getInt(1));
+	        }
+
+	        String sqlLog = """
+	            INSERT INTO LogAgendamento (agendamento_id, estado, data_hora)
+	            VALUES (?, ?, ?)
+	        """;
+	        stmtLog = conn.prepareStatement(sqlLog);
+	        for (LogAgendamento log : agendamento.getLog()) {
+	            stmtLog.setInt(1, agendamento.getId());
+	            stmtLog.setString(2, log.getEstado().name());
+	            stmtLog.setTimestamp(3, new Timestamp(log.getHoraMudanca().getTime()));
+	            stmtLog.executeUpdate();
+	        }
+
+	        conn.commit();
+	    } catch (SQLException e) {
+	        if (conn != null) {
+	            conn.rollback();
+	        }
+	        throw e;
+	    } finally {
+	        if (rs != null) rs.close();
+	        if (stmtLog != null) stmtLog.close();
+	        if (stmtAgendamento != null) stmtAgendamento.close();
+	        if (conn != null) conn.setAutoCommit(true);
+	        if (conn != null) conn.close();
+	    }
+	}
+
+
 }

@@ -9,6 +9,9 @@ import br.edu.ifsp.arqdsw2.projeto_av1.model.enums.Status;
 
 public class Agendamento {
 	private int id;
+	private int clienteId;
+	private int prestadorId;
+	private int disponibilidadeId;
 	private Status estado;
 	private Date criacao;
 	private Date diaMes;
@@ -19,6 +22,7 @@ public class Agendamento {
 	public Agendamento() {log = new ArrayList<LogAgendamento>();}
 
 	public Agendamento(int id, Status estado, Date criacao, Date diaMes, Time horaInicio, Time horFim) {
+		this();
 		this.id = id;
 		this.estado = estado;
 		this.criacao = criacao;
@@ -75,6 +79,30 @@ public class Agendamento {
 	public void setCriacao(Date criacao) {
 		this.criacao = criacao;
 	}
+	
+	public int getClienteId() {
+		return clienteId;
+	}
+
+	public void setClienteId(int clienteId) {
+		this.clienteId = clienteId;
+	}
+
+	public int getPrestadorId() {
+		return prestadorId;
+	}
+
+	public void setPrestadorId(int prestadorId) {
+		this.prestadorId = prestadorId;
+	}
+
+	public int getDisponibilidadeId() {
+		return disponibilidadeId;
+	}
+
+	public void setDisponibilidadeId(int disponibilidadeId) {
+		this.disponibilidadeId = disponibilidadeId;
+	}
 
 	public List<LogAgendamento> getLog() {
 		return new ArrayList<LogAgendamento>(log);
@@ -89,4 +117,5 @@ public class Agendamento {
 			addMudanca(log);
 		}
 	}
+
 }
