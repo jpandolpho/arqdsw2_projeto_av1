@@ -10,6 +10,7 @@ import br.edu.ifsp.arqdsw2.projeto_av1.model.enums.Status;
 
 public class LogAgendamentoDao {
 	private static final String SELECT_BY_ID = "SELECT status,data_hora FROM logagendamento WHERE agendamento_id=?";
+	private static final String INSERT = "INSERT INTO logagendamento(agendamento_id,status) VALUES (?,?)";
 	
 	public List<LogAgendamento> retrieve(int id){
 		List<LogAgendamento> logs = new ArrayList<>();
@@ -42,5 +43,19 @@ public class LogAgendamentoDao {
 		}
 		
 		return logs;
+	}
+	
+	public boolean insert(String status, int id) {
+		int rows = 0;
+		try(var connection = DatabaseConnection.getConnection();
+				var stmt = connection.prepareStatement(INSERT)){
+			stmt.setString(2,status);
+			stmt.setInt(1,id);
+			
+			rows = stmt.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+		return rows > 0;
 	}
 }

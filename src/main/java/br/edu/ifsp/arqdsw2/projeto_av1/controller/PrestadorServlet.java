@@ -2,14 +2,18 @@ package br.edu.ifsp.arqdsw2.projeto_av1.controller;
 
 import java.io.IOException;
 
+import br.edu.ifsp.arqdsw2.projeto_av1.controller.command.AceitarAgendamentoCommand;
 import br.edu.ifsp.arqdsw2.projeto_av1.controller.command.AdicionarFotoCommand;
 import br.edu.ifsp.arqdsw2.projeto_av1.controller.command.CadastrarHorarioCommand;
 import br.edu.ifsp.arqdsw2.projeto_av1.controller.command.Command;
+import br.edu.ifsp.arqdsw2.projeto_av1.controller.command.ConcluirAgendamentoCommand;
 import br.edu.ifsp.arqdsw2.projeto_av1.controller.command.HomePsicologoCommand;
 import br.edu.ifsp.arqdsw2.projeto_av1.controller.command.ListarAgendamentosCommand;
 import br.edu.ifsp.arqdsw2.projeto_av1.controller.command.LogoutCommand;
 import br.edu.ifsp.arqdsw2.projeto_av1.controller.command.PerfilCommand;
+import br.edu.ifsp.arqdsw2.projeto_av1.controller.command.RejeitarAgendamentoCommand;
 import br.edu.ifsp.arqdsw2.projeto_av1.controller.command.SalvarFotoCommand;
+import br.edu.ifsp.arqdsw2.projeto_av1.controller.command.VisualizarLogCommand;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
@@ -52,6 +56,14 @@ public class PrestadorServlet extends HttpServlet {
 				command = new CadastrarHorarioCommand();
 		}else if("listarAgendamentos".equals(action)) {
 			command = new ListarAgendamentosCommand();
+		}else if("visualizarLog".equals(action)) {
+			command = new VisualizarLogCommand();
+		}else if("aceitarAgendamento".equals(action)) {
+			command = new AceitarAgendamentoCommand();
+		}else if("rejeitarAgendamento".equals(action)) {
+			command = new RejeitarAgendamentoCommand();
+		}else if("concluirAgendamento".equals(action)) {
+			command = new ConcluirAgendamentoCommand();
 		}else {
 			command = new HomePsicologoCommand();
 		}

@@ -16,6 +16,7 @@ public class AgendamentoDao {
 			"INNER JOIN disponibilidade d ON a.disponibilidade_id=d.id WHERE a.prestador_id=? AND status=? ORDER BY criado_em DESC LIMIT ? OFFSET ?";
 	private static final String SELECT_COUNT = "SELECT COUNT(prestador_id) AS total_registros FROM agendamento WHERE prestador_id=? GROUP BY prestador_id";
 	private static final String SELECT_FILTERED_COUNT = "SELECT COUNT(prestador_id) AS total_registros FROM agendamento WHERE prestador_id=? AND status=? GROUP BY prestador_id";
+	private static final String UPDATE = "UPDATE agendamento SET status=? WHERE id=?";
 	
 	private final int AGENDAMENTOS_POR_PAGINA = 20;
 	
@@ -90,5 +91,17 @@ public class AgendamentoDao {
 		return res/AGENDAMENTOS_POR_PAGINA;
 	}
 	
-	
+	public boolean update(String status, int id) {
+		int rows = 0;
+		try(var connection = DatabaseConnection.getConnection();
+				var stmt = connection.prepareStatement(UPDATE)){
+			stmt.setString(1,status);
+			stmt.setInt(2,id);
+			
+			rows = stmt.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+		return rows > 0;
+	}
 }

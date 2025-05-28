@@ -28,7 +28,7 @@
 				<th>Data de Criação</th>
 				<th>Estado</th>
 				<th>Histórico de Mudanças</th>
-				<th>Ações</th>
+				<th colspan="3">Ações</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -39,8 +39,10 @@
 					<td>${agendamento.horaFim }</td>
 					<td>${agendamento.criacao }</td>
 					<td>${agendamento.estado }</td>
-					<td>log</td>
-					<td>ações</td>
+					<td><a href="prestadores?action=visualizarLog&id=${agendamento.id}">Log</a></td>
+					<td><form action="prestadores?action=aceitarAgendamento&id=${agendamento.id}" method="post"><button type="submit" ${agendamento.estado != 'SOLICITADO' ? 'disabled' : '' }>Aceitar</button></form></td>
+					<td><form action="prestadores?action=rejeitarAgendamento&id=${agendamento.id}" method="post"><button type="submit" ${agendamento.estado != 'SOLICITADO' ? 'disabled' : '' }>Rejeitar</button></form></td>
+					<td><form action="prestadores?action=concluirAgendamento&id=${agendamento.id}" method="post"><button type="submit" ${agendamento.estado != 'ACEITO' ? 'disabled' : '' }>Concluir</button></form></td>
 				</tr>
 			</c:forEach>
 		</tbody>
