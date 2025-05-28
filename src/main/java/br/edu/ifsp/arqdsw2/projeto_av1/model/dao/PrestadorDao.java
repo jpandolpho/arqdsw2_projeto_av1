@@ -14,28 +14,43 @@ public class PrestadorDao {
 	private static final String SELECT_ID_BY_EMAIL = "SELECT id FROM prestador WHERE email=?";
 	
 	public boolean insert(Prestador p, String cidade) {
-		int rows = 0;
-		if(p!=null) {
-			try(var connection = DatabaseConnection.getConnection();
-					var stmt = connection.prepareStatement(INSERT)){
-				stmt.setString(1, p.getNomeFantasia());
-				stmt.setString(2, p.getNome());
-				stmt.setString(3, p.getFotoPerfil());
-				stmt.setString(4, p.getEspecialidade());
-				stmt.setString(5, p.getEndereco());
-				stmt.setString(6, p.getDescricao());
-				stmt.setString(7, p.getEmail());
-				stmt.setString(8, p.getSenha());
-				CidadeDao dao = new CidadeDao();
-				int id = dao.fetchByNome(cidade);
-				stmt.setInt(9, id);
-				
-				rows = stmt.executeUpdate();
-			}catch(SQLException e) {
-				e.printStackTrace();
-			}
-		}
-		return rows > 0;
+	    if (p == null) {
+	        return false;
+	    }
+
+	    int rows = 0;
+
+	    try (var connection = DatabaseConnection.getConnection();
+	         var stmt = connection.prepareStatement(INSERT, java.sql.Statement.RETURN_GENERATED_KEYS)) {
+
+	        stmt.setString(1, p.getNomeFantasia());
+	        stmt.setString(2, p.getNome());
+	        stmt.setString(3, p.getFotoPerfil());
+	        stmt.setString(4, p.getEspecialidade());
+	        stmt.setString(5, p.getEndereco());
+	        stmt.setString(6, p.getDescricao());
+	        stmt.setString(7, p.getEmail());
+	        stmt.setString(8, p.getSenha());
+
+	        CidadeDao dao = new CidadeDao();
+	        int idCidade = dao.fetchByNome(cidade);
+	        stmt.setInt(9, idCidade);
+
+	        rows = stmt.executeUpdate();
+
+	        if (rows > 0) {
+	            try (var generatedKeys = stmt.getGeneratedKeys()) {
+	                if (generatedKeys.next()) {
+	                    p.setId(generatedKeys.getInt(1));  // armazena o ID gerado no objeto
+	                }
+	            }
+	        }
+
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+
+	    return rows > 0;
 	}
 	
 	public Prestador findByEmail(String email) {

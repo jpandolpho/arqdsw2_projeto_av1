@@ -17,9 +17,16 @@ public class CadastrarHorarioCommand implements Command {
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
         try {
+        	if (req.getParameter("dia_mes") == null) {
+                //não veio formulário preenchido: mostra o form
+                return "/prestador/cadastrarHorario.jsp";
+            }
+        	
             HttpSession session = req.getSession();
-            Prestador prestador = (Prestador) session.getAttribute("usuarioLogado");
+            Prestador prestador = (Prestador) session.getAttribute("user");
 
+            System.out.println("Prestador: " + prestador.getNome() + ", ID: " + prestador.getId());
+            
             String diaMesStr = req.getParameter("dia_mes");
             String diaSemanaStr = req.getParameter("dia_semana");
             String horaInicioStr = req.getParameter("hora_inicio");

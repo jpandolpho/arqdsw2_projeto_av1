@@ -1,38 +1,36 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<!DOCTYPE html>
+<html>
+<jsp:include page="../includes/head.html"/>
+<body>
+    <h2>Cadastrar Horário Disponível</h2>
+    <form action="prestadores" method="post">
+        <input type="hidden" name="action" value="cadastrarHorario" />
+        
+        <label>Data (aaaa-mm-dd):</label>
+        <input type="date" name="dia_mes" required /><br>
 
-<h2>Cadastrar Horário de Disponibilidade</h2>
+        <label>Dia da Semana:</label>
+        <select name="dia_semana" required>
+            <option value="SEG">Segunda</option>
+            <option value="TER">Terça</option>
+            <option value="QUA">Quarta</option>
+            <option value="QUI">Quinta</option>
+            <option value="SEX">Sexta</option>
+            <option value="SAB">Sábado</option>
+            <option value="DOM">Domingo</option>
+        </select><br>
 
-<% String msg = (String) request.getAttribute("msg"); %>
-<% if (msg != null) { %>
-    <p style="color: green;"><%= msg %></p>
-<% } %>
+        <label>Hora Início:</label>
+        <input type="time" name="hora_inicio" required /><br>
 
-<form action="controller" method="post">
-    <input type="hidden" name="command" value="CadastrarHorario">
+        <label>Hora Fim:</label>
+        <input type="time" name="hora_fim" required /><br><br>
 
-    <label for="diaSemana">Dia da Semana:</label>
-    <select name="diaSemana" id="diaSemana" required>
-        <option value="SEGUNDA">Segunda-feira</option>
-        <option value="TERCA">Terça-feira</option>
-        <option value="QUARTA">Quarta-feira</option>
-        <option value="QUINTA">Quinta-feira</option>
-        <option value="SEXTA">Sexta-feira</option>
-        <option value="SABADO">Sábado</option>
-        <option value="DOMINGO">Domingo</option>
-    </select>
-    <br><br>
-
-    <label for="horaInicio">Hora de Início:</label>
-    <input type="time" name="horaInicio" id="horaInicio" required>
-    <br><br>
-
-    <label for="horaFim">Hora de Fim:</label>
-    <input type="time" name="horaFim" id="horaFim" required>
-    <br><br>
-
-    <input type="submit" value="Cadastrar Horário">
-</form>
-
-<a href="prestador/home.jsp">Voltar à Home</a>
-
+        <input type="submit" value="Cadastrar" />
+    </form>
+    
+    <a href="prestador/home.jsp">Voltar à Home</a>
+    
+</body>
 </html>
