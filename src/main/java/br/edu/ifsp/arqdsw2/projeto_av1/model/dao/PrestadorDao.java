@@ -144,6 +144,8 @@ public class PrestadorDao {
 	        e.printStackTrace();
 	    }
 
+	    System.out.println("Executando buscarPorCidadeEspecialidade com cidade=" + cidade + ", especialidade=" + especialidade);
+	    
 	    return prestadores;
 	}
 

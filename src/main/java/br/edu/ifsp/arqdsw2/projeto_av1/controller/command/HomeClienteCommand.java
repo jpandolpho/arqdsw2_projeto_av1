@@ -17,7 +17,7 @@ public class HomeClienteCommand implements Command {
 			PrestadorDao prestadorDao = new PrestadorDao();
 	        List<Prestador> prestadores = prestadorDao.buscarPorCidadeEspecialidade(null, null); // retorna todos
 	        request.setAttribute("prestadores", prestadores);
+	        System.out.println("Prestadores carregados: " + prestadores.size());
 	        return "/cliente/home.jsp";
 	}
-
 }

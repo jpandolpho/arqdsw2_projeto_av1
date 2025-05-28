@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+   <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+   <%@ page isELIgnored="false" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -25,6 +27,12 @@
     </style>
 </head>
 	<h2>Prestadores disponíveis</h2>
+	
+	<c:if test="${empty prestadores}">
+    <p>Nenhum prestador disponível no momento.</p>
+	</c:if>
+	
+	
     <c:forEach var="prestador" items="${prestadores}">
         <div class="card">
             <img src="${prestador.fotoPerfil}" alt="Foto de ${prestador.nomeFantasia}" />
