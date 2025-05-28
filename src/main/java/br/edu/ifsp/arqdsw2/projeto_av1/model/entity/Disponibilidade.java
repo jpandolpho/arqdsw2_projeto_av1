@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.List;
 
 public class Disponibilidade {
+	private int id;
 	private Date diaMes;
 	private DiaSemana diaSemana;
 	private LocalTime horaInicio;
@@ -24,6 +25,14 @@ public class Disponibilidade {
 		agendamentos = new ArrayList<Agendamento>();
 	}
 
+	 public int getId() {
+	        return id;
+	    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+	
 	public Date getDiaMes() {
 		return diaMes;
 	}

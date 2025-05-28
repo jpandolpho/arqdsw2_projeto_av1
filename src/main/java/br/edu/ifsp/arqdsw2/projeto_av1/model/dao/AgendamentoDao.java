@@ -5,8 +5,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import br.edu.ifsp.arqdsw2.projeto_av1.model.dao.connection.DatabaseConnection;
@@ -109,6 +111,32 @@ public class AgendamentoDao {
 		}
 		return rows > 0;
 	}
+	
+	public boolean existeConflito(int disponibilidadeId, Date diaMes, Time horaInicio, Time horaFim) throws SQLException {
+	    String sql = "SELECT COUNT(*) FROM Agendamento WHERE disponibilidade_id = ? AND dia_mes = ? AND " +
+	                 "((hora_inicio < ? AND hora_fim > ?) OR (hora_inicio < ? AND hora_fim > ?) OR (hora_inicio >= ? AND hora_fim <= ?)) " +
+	                 "AND estado IN ('SOLICITADO', 'CONFIRMADO')"; 
+	    
+	    try (Connection conn = DatabaseConnection.getConnection();
+	         PreparedStatement stmt = conn.prepareStatement(sql)) {
+	        stmt.setInt(1, disponibilidadeId);
+	        stmt.setDate(2, new java.sql.Date(diaMes.getTime()));
+	        stmt.setTime(3, horaFim);
+	        stmt.setTime(4, horaInicio);
+	        stmt.setTime(5, horaFim);
+	        stmt.setTime(6, horaInicio);
+	        stmt.setTime(7, horaInicio);
+	        stmt.setTime(8, horaFim);
+
+	        try (ResultSet rs = stmt.executeQuery()) {
+	            if (rs.next()) {
+	                return rs.getInt(1) > 0;
+	            }
+	        }
+	    }
+	    return false;
+	}
+
 	
 	public void createWithTransaction(Agendamento agendamento) throws SQLException {
 	    Connection conn = null;

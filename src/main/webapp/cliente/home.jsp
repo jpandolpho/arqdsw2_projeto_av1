@@ -32,13 +32,30 @@
             <p><strong>Especialidade:</strong> ${prestador.especialidade}</p>
             <p><strong>Descrição:</strong> ${prestador.descricao}</p>
             <p><strong>Email:</strong> ${prestador.email}</p>
-            <form action="clientes" method="get">
-                <input type="hidden" name="action" value="agendar" />
-                <input type="hidden" name="prestadorId" value="${prestador.id}" />
-                <button type="submit">Agendar</button>
-            </form>
+             <button 
+	            class="btn-agendar"
+	            data-prestador-id="${prestador.id}">
+	            Agendar
+        	</button>
         </div>
     </c:forEach>
+    
+    <div id="modal-agendamento"></div>
+
+		<script>
+		document.querySelectorAll('.btn-agendar').forEach(btn => {
+		    btn.addEventListener('click', () => {
+		        const prestadorId = btn.dataset.prestadorId;
+		
+		        fetch(`controller?command=BuscarDisponibilidades&prestadorId=${prestadorId}`)
+		            .then(res => res.text())
+		            .then(html => {
+		                document.getElementById("modal-agendamento").innerHTML = html;
+		                document.getElementById("modal-agendamento").style.display = "block";
+		            });
+		    });
+		});
+		</script>
     
 <a href="clientes?action=logout">DESLOGAR</a>
 </body>

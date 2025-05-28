@@ -2,6 +2,8 @@ package br.edu.ifsp.arqdsw2.projeto_av1.controller.command;
 
 import br.edu.ifsp.arqdsw2.projeto_av1.model.dao.AgendamentoDao;
 import br.edu.ifsp.arqdsw2.projeto_av1.model.entity.Agendamento;
+import br.edu.ifsp.arqdsw2.projeto_av1.model.dao.DisponibilidadeDao;
+import br.edu.ifsp.arqdsw2.projeto_av1.model.entity.Disponibilidade;
 import br.edu.ifsp.arqdsw2.projeto_av1.model.entity.LogAgendamento;
 import br.edu.ifsp.arqdsw2.projeto_av1.model.enums.Status;
 
@@ -29,6 +31,20 @@ public class AgendarCommand implements Command {
             Date diaMes = dateFormat.parse(diaMesStr);
             Time horaInicio = Time.valueOf(horaInicioStr + ":00");
             Time horaFim = Time.valueOf(horaFimStr + ":00");
+            
+            DisponibilidadeDao dispDao = new DisponibilidadeDao();
+            Disponibilidade disp = dispDao.buscarPorId(disponibilidadeId);
+            if (disp == null) {
+                request.setAttribute("mensagem", "Disponibilidade não encontrada.");
+                return "/cliente/agendamento.jsp";
+            }
+
+            AgendamentoDao agendamentoDao = new AgendamentoDao();
+            boolean conflito = agendamentoDao.existeConflito(disponibilidadeId, diaMes, horaInicio, horaFim);
+            if (conflito) {
+                request.setAttribute("mensagem", "Já existe um agendamento nesse horário.");
+                return "/cliente/agendamento.jsp";
+            }
 
             Agendamento agendamento = new Agendamento();
             agendamento.setClienteId(clienteId);
@@ -43,8 +59,7 @@ public class AgendarCommand implements Command {
             LogAgendamento log = new LogAgendamento(Status.SOLICITADO, new Date());
             agendamento.addMudanca(log);
 
-            AgendamentoDao dao = new AgendamentoDao();
-            dao.createWithTransaction(agendamento);
+            agendamentoDao.createWithTransaction(agendamento);
 
             request.setAttribute("mensagem", "Agendamento realizado com sucesso!");
         } catch (Exception e) {
