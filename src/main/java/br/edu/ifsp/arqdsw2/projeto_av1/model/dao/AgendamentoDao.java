@@ -198,6 +198,4 @@ public class AgendamentoDao {
 	        if (conn != null) conn.close();
 	    }
 	}
-
-
 }
