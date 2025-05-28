@@ -8,7 +8,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 import br.edu.ifsp.arqdsw2.projeto_av1.controller.command.AgendarCommand;
-import br.edu.ifsp.arqdsw2.projeto_av1.controller.command.BuscarPrestadoresCommand;
 import br.edu.ifsp.arqdsw2.projeto_av1.controller.command.Command;
 import br.edu.ifsp.arqdsw2.projeto_av1.controller.command.HomeClienteCommand;
 import br.edu.ifsp.arqdsw2.projeto_av1.controller.command.HomePsicologoCommand;
@@ -35,8 +34,6 @@ public class ClienteServlet extends HttpServlet {
 			command = new HomeClienteCommand();
 		}else if("logout".equals(action)) {
 			command = new LogoutCommand();
-		} else if("buscarPrestadores".equals(action)) {
-		    command = new BuscarPrestadoresCommand();
 		} else if("agendar".equals(action)) {
 		    command = new AgendarCommand();
 		} else if("saibamais".equals(action)) {

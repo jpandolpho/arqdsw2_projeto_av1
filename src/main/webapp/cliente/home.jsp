@@ -44,6 +44,27 @@
 </head>
 	<h2>Prestadores disponíveis</h2>
 	
+    <!-- filtro -->
+    <form action="clientes" method="get">
+        <input type="hidden" name="action" value="home"/>
+        <label for="cidade">Cidade:</label>
+        <select name="cidade" id="cidade">
+            <option value="">-- Todas --</option>
+            <c:forEach var="cid" items="${cidades}">
+                <option value="${cid.nome}"
+                    ${cid.nome == cidadeSelecionada ? 'selected' : ''}>
+                    ${cid.nome}
+                </option>
+            </c:forEach>
+        </select>
+        <label for="especialidade">Especialidade:</label>
+        <input type="text"
+               name="especialidade"
+               id="especialidade"
+               value="${especialidadeSelecionada}"/>
+        <button type="submit">Filtrar</button>
+    </form>
+	
 	<c:if test="${empty prestadores}">
     <p>Nenhum prestador disponível no momento.</p>
 	</c:if>
@@ -61,6 +82,7 @@
         </div>
     </c:forEach>
     
+    <!-- paginação -->
     <div class="pagination">
   	<c:if test="${currentPage > 0}">
     <a href="clientes?action=home&page=${currentPage-1}">« Anterior</a>
