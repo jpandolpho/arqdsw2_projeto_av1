@@ -128,6 +128,7 @@
     <form action="prestadores?action=listarAgendamentos" method="post">
       <label for="filter"><strong>Filtro:</strong></label>
       <select name="filter">
+      	<option value=""></option>
         <option value="solicitado">Solicitado</option>
         <option value="aceito">Aceito</option>
         <option value="concluido">Concluído</option>
