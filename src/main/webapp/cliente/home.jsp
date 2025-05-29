@@ -163,7 +163,7 @@
 	
     <c:forEach var="prestador" items="${prestadores}">    
         <div class="card">
-            <img src="${prestador.fotoPerfil}" alt="Foto de ${prestador.nomeFantasia}" />
+            <img src="image?name=${prestador.fotoPerfil}&type=profile" alt="Foto de ${prestador.nomeFantasia}" />
             <h3>${prestador.nomeFantasia}</h3>
             <p><strong>Especialidade:</strong> ${prestador.especialidade}</p>
             <p><strong>Email:</strong> ${prestador.email}</p>

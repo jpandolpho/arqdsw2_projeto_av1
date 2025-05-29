@@ -129,7 +129,7 @@
   <div class="galeria">
     <c:forEach var="img" items="${imagens}">
       <div class="galeria-item">
-        <img src="${pageContext.request.contextPath}/locations/${img.caminho}" 
+        <img src="image?name=${img.caminho}&type=office" 
              style="width:150px;height:150px;object-fit:cover;" />
         <p>${img.descricao}</p>
       </div>

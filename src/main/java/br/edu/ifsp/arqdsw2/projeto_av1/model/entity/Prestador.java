@@ -40,6 +40,7 @@ public class Prestador extends Usuario {
 		this.nomeFantasia = nomeFantasia;
 		this.fotoPerfil = fotoPerfil;
 		this.especialidade = especialidade;
+		this.descricao = descricao;
 		this.dataCriacao = new Date();
 		imagens = new ArrayList<ImagemServ>();
 		disponibilidades = new ArrayList<Disponibilidade>();
