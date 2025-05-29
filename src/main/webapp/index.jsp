@@ -21,6 +21,15 @@
             width: 320px;
             text-align: center;
         }
+        
+        .logo {
+            margin-bottom: 20px;
+        }
+
+        .logo img {
+            max-width: 160px;
+            height: auto;
+        }
 
         label {
             display: block;
@@ -73,6 +82,11 @@
 </head>
 <body>
     <div class="card">
+    
+    	<div class="logo">
+            <img src="https://i.ibb.co/d8NGw4Z/calmind.png" alt="Logo Calmind">
+        </div>
+    
         <form action="front?action=login" method="post">
             <label for="email">Email:</label>
             <input type="text" name="email" id="email">
