@@ -1,17 +1,17 @@
 package br.edu.ifsp.arqdsw2.projeto_av1.model.dao;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.sql.Time;
+import java.util.ArrayList;
 import java.util.List;
-import java.sql.Date;
 
+import br.edu.ifsp.arqdsw2.projeto_av1.model.dao.connection.DatabaseConnection;
 import br.edu.ifsp.arqdsw2.projeto_av1.model.entity.Disponibilidade;
 import br.edu.ifsp.arqdsw2.projeto_av1.model.enums.DiaSemana;
-import br.edu.ifsp.arqdsw2.projeto_av1.model.dao.connection.DatabaseConnection;
 
 public class DisponibilidadeDao {
 

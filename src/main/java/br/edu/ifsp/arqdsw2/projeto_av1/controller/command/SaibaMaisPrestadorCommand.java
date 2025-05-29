@@ -1,16 +1,16 @@
 package br.edu.ifsp.arqdsw2.projeto_av1.controller.command;
 
+import java.io.IOException;
+import java.sql.SQLException;
+import java.util.List;
+
+import br.edu.ifsp.arqdsw2.projeto_av1.model.dao.DisponibilidadeDao;
 import br.edu.ifsp.arqdsw2.projeto_av1.model.dao.ImagemServDao;
 import br.edu.ifsp.arqdsw2.projeto_av1.model.dao.PrestadorDao;
-import br.edu.ifsp.arqdsw2.projeto_av1.model.dao.DisponibilidadeDao;
 import br.edu.ifsp.arqdsw2.projeto_av1.model.entity.Disponibilidade;
 import br.edu.ifsp.arqdsw2.projeto_av1.model.entity.Prestador;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-
-import java.io.IOException;
-import java.sql.SQLException;
-import java.util.List;
 
 public class SaibaMaisPrestadorCommand implements Command {
 

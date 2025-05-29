@@ -1,5 +1,9 @@
 package br.edu.ifsp.arqdsw2.projeto_av1.controller.command;
 
+import java.io.IOException;
+import java.sql.Time;
+import java.util.Date;
+
 import br.edu.ifsp.arqdsw2.projeto_av1.model.dao.AgendamentoDao;
 import br.edu.ifsp.arqdsw2.projeto_av1.model.entity.Agendamento;
 import br.edu.ifsp.arqdsw2.projeto_av1.model.entity.LogAgendamento;
@@ -7,9 +11,6 @@ import br.edu.ifsp.arqdsw2.projeto_av1.model.enums.Status;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import java.io.IOException;
-import java.sql.Time;
-import java.util.Date;
 
 public class AgendarCommand implements Command {
     @Override

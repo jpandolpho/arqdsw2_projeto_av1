@@ -1,10 +1,11 @@
 package br.edu.ifsp.arqdsw2.projeto_av1.model.entity;
 
-import br.edu.ifsp.arqdsw2.projeto_av1.model.enums.DiaSemana;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import br.edu.ifsp.arqdsw2.projeto_av1.model.enums.DiaSemana;
 
 public class Disponibilidade {
 	private int id;

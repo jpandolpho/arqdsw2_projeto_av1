@@ -13,7 +13,7 @@ public class RejeitarAgendamentoCommand implements Command {
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-int id = Integer.parseInt(request.getParameter("id"));
+		int id = Integer.parseInt(request.getParameter("id"));
 		
 		AgendamentoDao dao = new AgendamentoDao();
 		boolean updated = dao.update("rejeitado", id);

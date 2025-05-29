@@ -5,15 +5,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.sql.Time;
-import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import br.edu.ifsp.arqdsw2.projeto_av1.model.dao.connection.DatabaseConnection;
 import br.edu.ifsp.arqdsw2.projeto_av1.model.entity.Agendamento;
-import br.edu.ifsp.arqdsw2.projeto_av1.model.entity.LogAgendamento;
 import br.edu.ifsp.arqdsw2.projeto_av1.model.enums.Status;
 
 public class AgendamentoDao {

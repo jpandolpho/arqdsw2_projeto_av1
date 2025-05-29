@@ -1,12 +1,13 @@
 package br.edu.ifsp.arqdsw2.projeto_av1.controller.command;
 
+import java.io.IOException;
+import java.util.List;
+
 import br.edu.ifsp.arqdsw2.projeto_av1.model.dao.PrestadorDao;
 import br.edu.ifsp.arqdsw2.projeto_av1.model.entity.Prestador;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.util.List;
 
 public class HomeClienteCommand implements Command {
     @Override

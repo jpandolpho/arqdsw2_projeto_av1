@@ -1,8 +1,8 @@
 package br.edu.ifsp.arqdsw2.projeto_av1.model.dao;
 
 import java.sql.SQLException;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 
 import br.edu.ifsp.arqdsw2.projeto_av1.model.dao.connection.DatabaseConnection;
 import br.edu.ifsp.arqdsw2.projeto_av1.model.entity.Prestador;

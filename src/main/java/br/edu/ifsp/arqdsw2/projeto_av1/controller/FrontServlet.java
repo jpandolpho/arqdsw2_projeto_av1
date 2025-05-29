@@ -2,13 +2,13 @@ package br.edu.ifsp.arqdsw2.projeto_av1.controller;
 
 import java.io.IOException;
 
+import br.edu.ifsp.arqdsw2.projeto_av1.controller.command.CadastroClienteCommand;
+import br.edu.ifsp.arqdsw2.projeto_av1.controller.command.CadastroPsicologoCommand;
 import br.edu.ifsp.arqdsw2.projeto_av1.controller.command.Command;
 import br.edu.ifsp.arqdsw2.projeto_av1.controller.command.HomeCommand;
 import br.edu.ifsp.arqdsw2.projeto_av1.controller.command.LoginCommand;
 import br.edu.ifsp.arqdsw2.projeto_av1.controller.command.SaveClienteCommand;
 import br.edu.ifsp.arqdsw2.projeto_av1.controller.command.SavePsicologoCommand;
-import br.edu.ifsp.arqdsw2.projeto_av1.controller.command.CadastroClienteCommand;
-import br.edu.ifsp.arqdsw2.projeto_av1.controller.command.CadastroPsicologoCommand;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;

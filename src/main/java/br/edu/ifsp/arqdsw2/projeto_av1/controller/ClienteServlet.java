@@ -1,18 +1,17 @@
 package br.edu.ifsp.arqdsw2.projeto_av1.controller;
 
-import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 import br.edu.ifsp.arqdsw2.projeto_av1.controller.command.AgendarCommand;
 import br.edu.ifsp.arqdsw2.projeto_av1.controller.command.Command;
 import br.edu.ifsp.arqdsw2.projeto_av1.controller.command.HomeClienteCommand;
-import br.edu.ifsp.arqdsw2.projeto_av1.controller.command.HomePsicologoCommand;
 import br.edu.ifsp.arqdsw2.projeto_av1.controller.command.LogoutCommand;
 import br.edu.ifsp.arqdsw2.projeto_av1.controller.command.SaibaMaisPrestadorCommand;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 @WebServlet("/clientes")
 public class ClienteServlet extends HttpServlet {
